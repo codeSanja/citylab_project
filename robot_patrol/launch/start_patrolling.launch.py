@@ -11,10 +11,10 @@ def generate_launch_description():
         Node(
             package='rviz2',
             executable='rviz2',
-            # arguments=[
-                # '-d',
-                # '/rviz/patrol.rviz'
-            # ],
+            arguments=[
+                '-d',
+                '/home/user/ros2_ws/src/citylab_project/robot_patrol/rviz/patrol.rviz'
+            ],
             output='screen'
         )
     ])
