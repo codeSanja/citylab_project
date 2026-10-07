@@ -10,11 +10,25 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(std_srvs REQUIRED)
+# find_package(std_srvs REQUIRED)
 find_package(cv_bridge REQUIRED)
-find_package(OpenCV REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(nav_msgs REQUIRED)
+
+
+add_executable(patrol_node src/patrol.cpp)
+ament_target_dependencies(patrol_node
+        rclcpp
+        sensor_msgs
+        cv_bridge
+        tf2
+        nav_msgs
+        # std_srvs
+        geometry_msgs
+)
+
+install(TARGETS patrol_node DESTINATION lib/${PROJECT_NAME})
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
