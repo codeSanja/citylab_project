@@ -3,10 +3,10 @@
 A ROS 2 project written in C++ that uses LiDAR data to navigate around obstacles. The `robot_patrol` package can be run in a simulated environment with RViz or against a physical robot.
 
 ## Patrolling
-[partolling.mov](robot_patrol/assets/partolling.mp4)
+https://github.com/user-attachments/assets/2ceecd83-0acf-4886-9198-5328fbff3fd4
 
 ## RViz and the simulated environment
-[rviz in simulation.mov](robot_patrol/assets/rviz%20in%20simulation.mp4)
+https://github.com/user-attachments/assets/e3bc0982-bf84-453b-98f5-87689326c20c
 
 ## Overview
 
