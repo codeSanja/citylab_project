@@ -60,15 +60,6 @@ public:
       float right_clearance = std::min(obstacle_data.distances["Front_Right"],
                                        obstacle_data.distances["Right"]);
 
-        // ... Lgging
-        // RCLCPP_INFO(
-        //     this->get_logger(),
-        //     "Clearance :: left=%.3f m, right=%.3f m -> turning %s",
-        //     left_clearance,
-        //     right_clearance,
-        //     left_clearance >= right_clearance ? "LEFT" : "RIGHT"
-        // );
-
         RCLCPP_INFO(
             this->get_logger(),
             "AVOIDANCE :: \n"
@@ -84,8 +75,6 @@ public:
             right_clearance,
             left_clearance >= right_clearance ? "LEFT" : "RIGHT"
         );
-
-        //  ... end of logging
 
       // get the furthest distance and turn toward there
       action.linear.x = is_construct_environment_ ? 0.05 : 0.3;
@@ -114,8 +103,6 @@ public:
 
           {"Right_Rear", {100, 133}},
           {"Right", {134, 165}},
-        //   {"Front_Right", {167, 188}},
-        //   {"Front_Front_Right", {189, 199}},
           {"Front_Right", {166, 187}},
           {"Front_Front_Right", {188, 199}},
       };
@@ -157,16 +144,19 @@ public:
       result.detections[sector.first] = min_distance < obstacle_threshold;
     }
 
-    // for (size_t i = 0; i < current_laser_scan_->ranges.size(); ++i) {
-    //   RCLCPP_INFO(this->get_logger(), "current_laser_scan_ :: %zu: %.3f m", i,
-    //               current_laser_scan_->ranges[i]);
-    // }
+    if (result.detections["Front_Front_Left"] ||
+            result.detections["Front_Front_Right"]) {
+        for (size_t i = 0; i < current_laser_scan_->ranges.size(); ++i) {
+        RCLCPP_INFO(this->get_logger(), "current_laser_scan_ :: %zu: %.3f m", i,
+                    current_laser_scan_->ranges[i]);
+        }
 
-    // for (const auto &[sector, distance] : result.distances) {
-    //   RCLCPP_INFO(this->get_logger(),
-    //               "Result :: %s: distance=%.3f m, detected=%s", sector.c_str(),
-    //               distance, result.detections[sector] ? "true" : "false");
-    // }
+        for (const auto &[sector, distance] : result.distances) {
+        RCLCPP_INFO(this->get_logger(),
+                    "Result :: %s: distance=%.3f m, detected=%s", sector.c_str(),
+                    distance, result.detections[sector] ? "true" : "false");
+        }
+    }
 
     return result;
   }
