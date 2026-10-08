@@ -60,15 +60,6 @@ public:
       float right_clearance = std::min(obstacle_data.distances["Front_Right"],
                                        obstacle_data.distances["Right"]);
 
-        // ... Lgging
-        // RCLCPP_INFO(
-        //     this->get_logger(),
-        //     "Clearance :: left=%.3f m, right=%.3f m -> turning %s",
-        //     left_clearance,
-        //     right_clearance,
-        //     left_clearance >= right_clearance ? "LEFT" : "RIGHT"
-        // );
-
         RCLCPP_INFO(
             this->get_logger(),
             "AVOIDANCE :: \n"
@@ -85,7 +76,6 @@ public:
             left_clearance >= right_clearance ? "LEFT" : "RIGHT"
         );
 
-        //  ... end of logging
 
       // get the furthest distance and turn toward there
       action.linear.x = is_construct_environment_ ? 0.05 : 0.3;
@@ -106,19 +96,43 @@ public:
     std::map<std::string, std::pair<int, int>> sectors;
 
     if (is_construct_environment_) {
-      sectors = {
-          {"Front_Front_Left", {0, 11}},
-          {"Front_Left", {12, 33}},
-          {"Left", {34, 66}},
-          {"Left_Rear", {67, 99}},
+    //   sectors = {
+    //       {"Front_Front_Left", {0, 11}},
+    //       {"Front_Left", {12, 33}},
+    //       {"Left", {34, 66}},
+    //       {"Left_Rear", {67, 99}},
 
-          {"Right_Rear", {100, 133}},
-          {"Right", {134, 165}},
-        //   {"Front_Right", {167, 188}},
-        //   {"Front_Front_Right", {189, 199}},
-          {"Front_Right", {166, 187}},
-          {"Front_Front_Right", {188, 199}},
-      };
+    //       {"Right_Rear", {100, 133}},
+    //       {"Right", {134, 165}},
+    //       {"Front_Right", {166, 187}},
+    //       {"Front_Front_Right", {188, 199}},
+    //   };
+
+        // sectors = {
+        //     {"Front_Front_Left", {0, 11}},
+        //     {"Front_Left", {12, 33}},
+        //     // {"Left", {34, 66}},
+        //     {"Left", {34, 66}},
+        //     // {"Left_Rear", {67, 99}},
+
+        //     // {"Right_Rear", {100, 133}},
+        //     {"Right", {134, 165}},
+        //     // {"Right", {134, 165}},
+        //     {"Front_Right", {166, 187}},
+        //     {"Front_Front_Right", {188, 199}},
+        // };
+
+        sectors = {
+            {"Front_Front_Left",  {0, 26}},
+            {"Front_Left",        {27, 76}},
+            {"Left",              {77, 150}},
+            {"Left_Rear",         {151, 225}},
+
+            {"Right_Rear",        {226, 302}},
+            {"Right",             {303, 374}},
+            {"Front_Right",      {375, 424}},
+            {"Front_Front_Right",{425, 451}},
+        };
     } else {
       sectors = {
           {"Front_Front_Right", {160, 179}},
@@ -167,6 +181,20 @@ public:
     //               "Result :: %s: distance=%.3f m, detected=%s", sector.c_str(),
     //               distance, result.detections[sector] ? "true" : "false");
     // }
+
+    if (result.detections["Front_Front_Left"] ||
+            result.detections["Front_Front_Right"]) {
+        for (size_t i = 0; i < current_laser_scan_->ranges.size(); ++i) {
+        RCLCPP_INFO(this->get_logger(), "current_laser_scan_ :: %zu: %.3f m", i,
+                    current_laser_scan_->ranges[i]);
+        }
+
+        for (const auto &[sector, distance] : result.distances) {
+        RCLCPP_INFO(this->get_logger(),
+                    "Result :: %s: distance=%.3f m, detected=%s", sector.c_str(),
+                    distance, result.detections[sector] ? "true" : "false");
+        }
+    }
 
     return result;
   }
