@@ -107,16 +107,8 @@ private:
 
         for (size_t i = 0; i < laser_data.ranges.size(); i++) {
             float distance = laser_data.ranges[i];
-            // if (std::isinf(distance) && distance > 0) distance = laser_data.range_max;
-            if (std::isfinite(distance)) {
-                continue;
-            }
-
-            // Ignore invalid measurements
-            if (distance < laser_data.range_min ||
-                distance > laser_data.range_max) {
-                continue;
-            }
+            if (std::isinf(distance) && distance > 0) continue;
+       
 
             bool is_front = false;
             if(is_construct_environment_) {
