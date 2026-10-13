@@ -86,12 +86,12 @@ public:
                      action.angular.z = 0;
                  } else if (response->direction == "left") {
                      action.linear.x = is_construct_environment_
-                             ? 0.1
+                             ? 0.02
                              : 0.3;
                      action.angular.z = 0.5;
                  } else if (response->direction == "right") {
                      action.linear.x = is_construct_environment_
-                             ? 0.1
+                             ? 0.02
                              : 0.3;
                      action.angular.z = -0.5;
                  }
