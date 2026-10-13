@@ -21,7 +21,7 @@ struct ObstacleData {
 class PatrolWithService : public rclcpp::Node {
 public:
     PatrolWithService() : Node("patrol_node") {
-        is_construct_environment_ = false; // TODO Update for the Construct enviroment
+        is_construct_environment_ = true;
         std::string laser_subscriber_name =
                 is_construct_environment_ ? "/fastbot_1/scan" : "/vehicle_green/scan";
         laser_subscriber_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
@@ -86,12 +86,12 @@ public:
                      action.angular.z = 0;
                  } else if (response->direction == "left") {
                      action.linear.x = is_construct_environment_
-                             ? 0.05
+                             ? 0.1
                              : 0.3;
                      action.angular.z = 0.5;
                  } else if (response->direction == "right") {
                      action.linear.x = is_construct_environment_
-                             ? 0.05
+                             ? 0.1
                              : 0.3;
                      action.angular.z = -0.5;
                  }
@@ -104,7 +104,7 @@ public:
     }
 
 private:
-    bool is_construct_environment_; // TODO Update for the Construct environment
+    bool is_construct_environment_;
     rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr
     laser_subscriber_;
     sensor_msgs::msg::LaserScan::SharedPtr current_laser_scan_;

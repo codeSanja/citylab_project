@@ -5,7 +5,7 @@
 class TestService : public rclcpp::Node {
     public:
         TestService() : Node("test_service") {
-            is_construct_environment_ = false; // TODO Update for the Construct environment
+            is_construct_environment_ = true;
 
             std::string laser_subscriber_name = is_construct_environment_ ? "/fastbot_1/scan" : "/vehicle_green/scan";
             laser_subscriber_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
@@ -54,7 +54,7 @@ class TestService : public rclcpp::Node {
         }
 
     private:
-        bool is_construct_environment_; // TODO Update for the Construct environment
+        bool is_construct_environment_;
         rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr laser_subscriber_;
         sensor_msgs::msg::LaserScan::SharedPtr current_laser_scan_;
         rclcpp::Client<robot_patrol::srv::GetDirection>::SharedPtr client_;

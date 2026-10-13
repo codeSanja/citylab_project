@@ -17,7 +17,7 @@
 class DirectionService : public rclcpp::Node {
 public:
     DirectionService() : Node("direction_service") {
-        is_construct_environment_ = false; //TODO
+        is_construct_environment_ = true;
         std::string name_service = "/direction_service";
         service_ = this->create_service<robot_patrol::srv::GetDirection>(
             name_service,
@@ -45,15 +45,15 @@ private:
         size_t left_end;
 
         if (is_construct_environment_) {
-            // change this
-            bool is_construct_simulation = true;
+            bool is_construct_simulation = true; // TODO Update in the real-robot branch
 
             if (is_construct_simulation) {
+                // Construct simulation: 200 rays
                 right_begin = 134;
                 right_end = 188;
 
                 front_begin = 188;
-                front_end = 12;
+                front_end = 12;  // Wraparound
 
                 left_begin = 12;
                 left_end = 67;
@@ -80,7 +80,7 @@ private:
         }
 
 
-        double min_forward_distance = laser_data.ranges[front_begin+1]; // TODO adjust for construct env, first forward laser
+        double min_forward_distance = laser_data.ranges[front_begin+1];
 
         RCLCPP_INFO(
             this->get_logger(),
@@ -115,9 +115,18 @@ private:
                 continue;
             }
 
+            bool is_front = false;
+            if(is_construct_environment_) {
+                is_front = front_begin < front_end
+                    ? (i >= front_begin && i < front_end)
+                    : (i >= front_begin || i < front_end);
+            } else {
+                is_front = i >= front_begin && i < front_end;
+            }
+
             if (i >= right_begin && i < right_end) {
                 total_dist_sec_right += distance;
-            } else if (i >= front_begin && i < front_end) {
+            } else if (is_front) {
                 total_dist_sec_front += distance; // total_dist_sec_front - not used, but kept for debugging
                 if (min_forward_distance > distance) { min_forward_distance = distance; }
             } else if (i >= left_begin && i < left_end) {
@@ -147,7 +156,7 @@ private:
     }
 
     rclcpp::Service<robot_patrol::srv::GetDirection>::SharedPtr service_;
-    bool is_construct_environment_; // TODO Update for the Construct environment
+    bool is_construct_environment_;
 };
 
 int main(int argc, char *argv[]) {
