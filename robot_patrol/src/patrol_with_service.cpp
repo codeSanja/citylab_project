@@ -35,7 +35,7 @@ public:
             twist_publisher_name, 10);
 
         control_timer_ =
-                this->create_wall_timer(std::chrono::milliseconds(500),
+                this->create_wall_timer(std::chrono::milliseconds(100),
                                         std::bind(&PatrolWithService::send_request, this));
 
         std::string name_service = "/direction_service";
