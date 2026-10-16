@@ -15,10 +15,12 @@ find_package(cv_bridge REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
+find_package(rclcpp_action REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
         "src/custom_interfaces/srv/GetDirection.srv"
-        DEPENDENCIES sensor_msgs
+        "src/custom_interfaces/action/GoToPose.action"
+        DEPENDENCIES sensor_msgs geometry_msgs
 )
 
 add_executable(patrol_node src/patrol.cpp)
@@ -107,6 +109,27 @@ target_link_libraries(patrol_with_service_node_executable
         "${cpp_typesupport_target}"
 )
 
+# Go to pose
+
+add_executable(go_to_pose_action_server_executable src/go_to_pose_action.cpp)
+
+ament_target_dependencies(go_to_pose_action_server_executable
+        rclcpp
+        sensor_msgs
+        cv_bridge
+        tf2
+        nav_msgs
+        std_srvs
+        geometry_msgs
+        rclcpp_action
+)
+
+install(TARGETS go_to_pose_action_server_executable DESTINATION lib/${PROJECT_NAME})
+
+target_link_libraries(go_to_pose_action_server_executable
+        "${cpp_typesupport_target}"
+)
+# End of Go to pose
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
