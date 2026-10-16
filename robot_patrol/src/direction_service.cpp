@@ -45,7 +45,7 @@ private:
         size_t left_end;
 
         if (is_construct_environment_) {
-            bool is_construct_simulation = true; // TODO Update in the real-robot branch
+            bool is_construct_simulation = false; // TODO Update in the real-robot branch
 
             if (is_construct_simulation) {
                 // Construct simulation: 200 rays
@@ -58,20 +58,11 @@ private:
                 left_begin = 12;
                 left_end = 67;
             } else { // Construct real robot
-                // right_begin = 303;
-                // right_end = 375;
-
-                // front_begin = 375;
-                // front_end = 77;
-
-                // left_begin = 77;
-                // left_end = 151;
-
                 right_begin = 303;
                 right_end = 425;
 
                 front_begin = 425;
-                front_end = 27;  // Wraparound
+                front_end = 27; 
 
                 left_begin = 27;
                 left_end = 151;
