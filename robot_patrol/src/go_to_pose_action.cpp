@@ -47,6 +47,8 @@ public:
         twist_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>(
             twist_publisher_name,
             10);
+
+        RCLCPP_INFO(this->get_logger(), "Action Server Ready");
     }
 
 private:
@@ -77,7 +79,7 @@ private:
     rclcpp_action::GoalResponse handle_goal(const rclcpp_action::GoalUUID &uuid,
                                             std::shared_ptr<const GoToPose::Goal> goal) {
         RCLCPP_INFO(this->get_logger(),
-                    "Received goal request with x: %.2f, y: %.2f, yaw: %.2f",
+                    "Goal Received with x: %.2f, y: %.2f, yaw: %.2f",
                     goal->goal_pos.x, goal->goal_pos.y, goal->goal_pos.theta);
         (void) uuid;
 
@@ -113,11 +115,11 @@ private:
         bool navigation_result = navigate_to_goal(goal->goal_pos.x, goal->goal_pos.y, goal->goal_pos.theta);
 
         if (navigation_result) {
-            RCLCPP_INFO(this->get_logger(), "Goal reached successfully!");
+            RCLCPP_INFO(this->get_logger(), "Goal Completed");
             result->status = true;
             goal_handle->succeed(result);
         } else {
-            RCLCPP_INFO(this->get_logger(), "Failed to reach goal :(");
+            RCLCPP_INFO(this->get_logger(), "Goal Failed");
             result->status = false;
             goal_handle->abort(result);
         }

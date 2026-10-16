@@ -8,4 +8,13 @@ def generate_launch_description():
             executable='go_to_pose_action_server_executable',
             output='screen'
         ),
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            arguments=[
+                '-d',
+                '/home/user/ros2_ws/src/citylab_project/robot_patrol/rviz/patrol.rviz'
+            ],
+            output='screen'
+        )
     ])
