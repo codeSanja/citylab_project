@@ -58,13 +58,22 @@ private:
                 left_begin = 12;
                 left_end = 67;
             } else { // Construct real robot
+                // right_begin = 303;
+                // right_end = 375;
+
+                // front_begin = 375;
+                // front_end = 77;
+
+                // left_begin = 77;
+                // left_end = 151;
+
                 right_begin = 303;
-                right_end = 375;
+                right_end = 425;
 
-                front_begin = 375;
-                front_end = 77;
+                front_begin = 425;
+                front_end = 27;  // Wraparound
 
-                left_begin = 77;
+                left_begin = 27;
                 left_end = 151;
             }
 
