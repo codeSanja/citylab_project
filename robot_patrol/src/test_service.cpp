@@ -7,7 +7,7 @@ class TestService : public rclcpp::Node {
         TestService() : Node("test_service") {
             is_construct_environment_ = true;
 
-            std::string laser_subscriber_name = is_construct_environment_ ? "/fastbot_1/scan" : "/vehicle_green/scan";
+            std::string laser_subscriber_name = is_construct_environment_ ? "/scan" : "/vehicle_green/scan";
             laser_subscriber_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
                 laser_subscriber_name, 10,
                 std::bind(&TestService::laser_callback, this, std::placeholders::_1));
