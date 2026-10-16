@@ -65,13 +65,13 @@ private:
         current_pos_.y = msg->pose.pose.position.y;
         current_pos_.theta = theta;
 
-        RCLCPP_INFO(
-            this->get_logger(),
-            "ODOM CALLBACK: x=%.3f, y=%.3f, theta=%.3f",
-            current_pos_.x,
-            current_pos_.y,
-            current_pos_.theta
-        );
+        // RCLCPP_INFO(
+        //     this->get_logger(),
+        //     "ODOM CALLBACK: x=%.3f, y=%.3f, theta=%.3f",
+        //     current_pos_.x,
+        //     current_pos_.y,
+        //     current_pos_.theta
+        // );
     }
 
     rclcpp_action::GoalResponse handle_goal(const rclcpp_action::GoalUUID &uuid,
