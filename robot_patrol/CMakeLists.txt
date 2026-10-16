@@ -20,7 +20,7 @@ find_package(rclcpp_action REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
         "src/custom_interfaces/srv/GetDirection.srv"
         "src/custom_interfaces/action/GoToPose.action"
-        DEPENDENCIES sensor_msgs geometry_msgs
+        DEPENDENCIES sensor_msgs geometry_msgs unique_identifier_msgs action_msgs
 )
 
 add_executable(patrol_node src/patrol.cpp)
