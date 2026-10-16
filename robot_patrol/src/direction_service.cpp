@@ -82,23 +82,23 @@ private:
 
         double min_forward_distance = laser_data.ranges[front_begin+1];
 
-        RCLCPP_INFO(
-            this->get_logger(),
-            "LaserScan: size=%zu, angle_min=%.3f, angle_max=%.3f, increment=%.5f",
-            laser_data.ranges.size(),
-            laser_data.angle_min,
-            laser_data.angle_max,
-            laser_data.angle_increment
-        );
+        // RCLCPP_INFO(
+        //     this->get_logger(),
+        //     "LaserScan: size=%zu, angle_min=%.3f, angle_max=%.3f, increment=%.5f",
+        //     laser_data.ranges.size(),
+        //     laser_data.angle_min,
+        //     laser_data.angle_max,
+        //     laser_data.angle_increment
+        // );
 
-        for (size_t i = 0; i < laser_data.ranges.size(); i++) {
-            RCLCPP_INFO(
-                this->get_logger(),
-                "LaserScan[%zu] = %.3f m",
-                i,
-                laser_data.ranges[i]
-            );
-        }
+        // for (size_t i = 0; i < laser_data.ranges.size(); i++) {
+        //     RCLCPP_INFO(
+        //         this->get_logger(),
+        //         "LaserScan[%zu] = %.3f m",
+        //         i,
+        //         laser_data.ranges[i]
+        //     );
+        // }
 
         // make decisions based on laser_data
         float total_dist_sec_right = 0.0;
