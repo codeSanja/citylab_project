@@ -23,13 +23,13 @@ public:
     PatrolWithService() : Node("patrol_node") {
         is_construct_environment_ = true;
         std::string laser_subscriber_name =
-                is_construct_environment_ ? "/scan" : "/vehicle_green/scan";
+                is_construct_environment_ ? "/fastbot_1/scan" : "/vehicle_green/scan";
         laser_subscriber_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
             laser_subscriber_name, 10,
             std::bind(&PatrolWithService::laser_callback, this, std::placeholders::_1));
 
         std::string twist_publisher_name = is_construct_environment_
-                                               ? "/cmd_vel"
+                                               ? "/fastbot_1/cmd_vel"
                                                : "/model/vehicle_green/cmd_vel";
         twist_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>(
             twist_publisher_name, 10);
