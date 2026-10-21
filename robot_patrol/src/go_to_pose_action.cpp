@@ -18,7 +18,7 @@ public:
 
     GoToPoseActionServer() : Node("go_to_pose_action") {
         is_construct_environment_ = true;
-        is_construct_simulation_ = false;
+        is_construct_simulation_ = true;
 
         using namespace std::placeholders;
 
